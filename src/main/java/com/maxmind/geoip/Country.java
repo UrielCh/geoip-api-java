@@ -27,8 +27,8 @@ package com.maxmind.geoip;
  */
 public class Country {
 
-	private final String code;
-	private final String name;
+	private String code;
+	private String name;
 
 	/**
 	 * Creates a new Country.
@@ -59,5 +59,9 @@ public class Country {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	public String toString() {
+		return name + " " + code;
 	}
 }

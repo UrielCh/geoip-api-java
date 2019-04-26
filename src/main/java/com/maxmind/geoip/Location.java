@@ -21,35 +21,55 @@
 package com.maxmind.geoip;
 
 public class Location {
-	public String countryCode;
-	public String countryName;
-	public String region;
-	public String city;
-	public String postalCode;
-	public float latitude;
-	public float longitude;
-	public int dma_code;
-	public int area_code;
-	public int metro_code;
+    public String countryCode;
+    public String countryName;
+    public String region;
+    public String city;
+    public String postalCode;
+    public float latitude;
+    public float longitude;
+    public int dma_code;
+    public int area_code;
+    public int metro_code;
 
-	private final static double EARTH_DIAMETER = 2 * 6378.2;
-	private final static double PI = 3.14159265;
-	private final static double RAD_CONVERT = PI / 180;
+    private final static double EARTH_DIAMETER = 2 * 6378.2;
+    private final static double PI = 3.14159265;
+    private final static double RAD_CONVERT = PI / 180;
 
+    public String toString() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append(countryCode);
+    	//sb.append(" countryName:").append(countryName);
+    	if (region != null)
+    		sb.append(" Region:").append(region);
+    	if (city != null)
+    		sb.append(" CITY:").append(city);
+    	if (postalCode != null)
+    		sb.append(" CP:").append(postalCode);
+    	sb.append("(").append(latitude).append(',').append(longitude).append(")");
+    	if (dma_code != 0)
+   		sb.append(" DMA:").append(dma_code);
+   		if (area_code != 0)
+   			sb.append(" AREA:").append(area_code);
+   		if (metro_code != 0)
+   			sb.append(" METRO:").append(metro_code);
+    	return sb.toString();
+    }
+    
 	public double distance(Location loc) {
 		double deltaLat, deltaLon;
-		double temp;
+        double temp;
 
-		float lat1 = latitude;
-		float lon1 = longitude;
-		float lat2 = loc.latitude;
-		float lon2 = loc.longitude;
+        float lat1 = latitude;
+        float lon1 = longitude;
+        float lat2 = loc.latitude;
+        float lon2 = loc.longitude;
 
-		// convert degrees to radians
-		lat1 *= RAD_CONVERT;
-		lat2 *= RAD_CONVERT;
+        // convert degrees to radians
+        lat1 *= RAD_CONVERT;
+        lat2 *= RAD_CONVERT;
 
-		// find the deltas
+        // find the deltas
 		deltaLat = lat2 - lat1;
 		deltaLon = (lon2 - lon1) * RAD_CONVERT;
 
@@ -58,5 +78,5 @@ public class Location {
 				* Math.cos(lat2) * Math.pow(Math.sin(deltaLon / 2), 2);
 		return EARTH_DIAMETER
 				* Math.atan2(Math.sqrt(temp), Math.sqrt(1 - temp));
-	}
+    }
 }
